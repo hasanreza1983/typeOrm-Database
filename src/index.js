@@ -22,12 +22,12 @@ import {Author} from "./entity/author";
 }).then(async connection => {
 
    
-    let photo = new Photo();
+    /**** let photo = new Photo();
     photo.title = "Bear3";
     photo.text = "I am near polar bears";
      
-    /**** Created a photo MetaData ****/
-    let metadata = new PhotoMetaData(); 
+     Created a photo MetaData ****/
+    /* let metadata = new PhotoMetaData(); 
     metadata.height = "640";
     metadata.width = "1000";
     metadata.Orientation = "Portrait";
@@ -35,7 +35,7 @@ import {Author} from "./entity/author";
     metadata.comment = "Easy as pie";
     metadata.photo = photo; // relaton created
 
-     /* using async/await to save the Entity 
+     using async/await to save the Entity 
      await connection.manager.save(photo);
      //console.log("Photo has been saved");
      
@@ -43,7 +43,7 @@ import {Author} from "./entity/author";
      let savedPhotos = await connection.manager.find(Photo);
      console.log("All Saved Photos are from the db:", savedPhotos); */
      
-     /***** using Repositories ****/
+     /***** using Repositoriess
      let photoRepository = connection.getRepository(Photo);
      await photoRepository.save(photo);
      let savedPhotos = await photoRepository.find();
@@ -60,9 +60,9 @@ import {Author} from "./entity/author";
      
      
      /************ updating Database **************/
-     let photoToUpdate = await photoRepository.findOneById(5);
-     photoToUpdate.title = "this is updated 5 title";
-     let savedPhotos2 = await photoRepository.save(photoToUpdate);
+     //let photoToUpdate = await photoRepository.findOneById(5);
+     //photoToUpdate.title = "this is updated 5 title";
+     //let savedPhotos2 = await photoRepository.save(photoToUpdate);
      //console.log("updated content is:",savedPhotos2);
      
      /****** Removing from the Database 
@@ -71,13 +71,51 @@ import {Author} from "./entity/author";
      
      
      /****** get PhotoMetaData Repository *****/
-     let photoMetaRespository = connection.getRepository(PhotoMetaData);
-     await photoMetaRespository.save(metadata);
-     let photoMetaSaved = await photoMetaRespository.find();
+     // let photoMetaRespository = connection.getRepository(PhotoMetaData);
+      // await photoMetaRespository.save(metadata);
+     //let photoMetaSaved = await photoMetaRespository.find();
      //console.log("Relation b/w two created" , photoMetaSaved);
      
      /* let photosQuery = await connection.getRepository(Photo).createQueryBuilder("photo")
      .innerJoinAndSelect("photo.metadata","metadata").getMany(); 
      console.log('here is the Query:',photosQuery);  */
+     
+     // create a photo
+    let photo = new Photo();
+    photo.title = "Me and Bears";
+    photo.text = "I am near polar bears";
+     
+     // create a photo metadata
+    let metadata = new PhotoMetaData();
+    metadata.height = 640;
+    metadata.width = 480;
+    metadata.compressed = true;
+    metadata.comment = "cybershoot";
+    metadata.orientation = "portait";
+    metadata.photo = photo; 
+    
+     // get entity repositories
+    /* let photoRepository = connection.getRepository(Photo);
+    let metadataRepository = connection.getRepository(PhotoMetaData); 
+    await photoRepository.save(photo);
+    await metadataRepository.save(metadata);
+    
+     
+ 
+    let photos = await photoRepository.find({ relations: ["metadata"] });  
+    let photoMetaData2 = await metadataRepository.find({ relations: ["photo"] });  
+    //console.log(photos);
+    console.log("This is MetaData",photoMetaData2); */
+    
+     const photoMetaData2 = await connection
+        .getRepository(PhotoMetaData)
+        .createQueryBuilder("photometa")
+        .leftJoinAndSelect("photometa.photo", "photo")
+        .getMany(); 
+         console.log("This is MetaData",photoMetaData2);
+     
+     
+     
+    
      
 }).catch(error => console.log(error)); 

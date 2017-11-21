@@ -1,4 +1,4 @@
-import {Entity, Column , PrimaryGeneratedColumn, OneToOne , JoinColumn} from "typeorm";
+import {Entity, Column , PrimaryGeneratedColumn , OneToOne ,JoinColumn} from "typeorm";
 import {Photo} from './Post';
 
 @Entity()
@@ -21,12 +21,15 @@ export class PhotoMetaData {
 	 
 	@Column("text")
     comment = ""; 
-	 
-	 /// stored the metaData in photo Class
-	 @OneToOne(type => Photo , photo => photo.metadata)
-	 @JoinColumn()
-     photo = Photo;
 
+	@OneToOne(type => Photo, photo => photo.metadata)
+    @JoinColumn()
+    photo= Photo;
+	 
+
+	 
+	 
+	 
 }
 
 

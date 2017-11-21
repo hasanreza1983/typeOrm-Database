@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Photo = undefined;
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
+var _dec, _dec2, _dec3, _dec4, _dec5, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4;
 
 var _typeorm = require("typeorm");
 
@@ -62,11 +62,13 @@ var Photo = exports.Photo = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm
   return _photoMetaData.PhotoMetaData;
 }, function (PhotoMetaData) {
   return PhotoMetaData.photo;
-}), _dec6 = (0, _typeorm.ManyToOne)(function (type) {
-  return _author.Author;
-}, function (author) {
-  return author.photos;
-}), _dec(_class = (_class2 = function Photo() {
+}), _dec(_class = (_class2 =
+
+/* @ManyToOne(type => Author, author => author.photos)
+@JoinColumn()
+author = Author; */
+
+function Photo() {
   _classCallCheck(this, Photo);
 
   _initDefineProp(this, "id", _descriptor, this);
@@ -76,8 +78,6 @@ var Photo = exports.Photo = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm
   _initDefineProp(this, "text", _descriptor3, this);
 
   _initDefineProp(this, "metadata", _descriptor4, this);
-
-  _initDefineProp(this, "author", _descriptor5, this);
 }
 
 //stored the photo in metadata
@@ -100,10 +100,5 @@ var Photo = exports.Photo = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm
   enumerable: true,
   initializer: function initializer() {
     return _photoMetaData.PhotoMetaData;
-  }
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "author", [_dec6], {
-  enumerable: true,
-  initializer: function initializer() {
-    return _author.Author;
   }
 })), _class2)) || _class);

@@ -81,6 +81,6 @@ var Author = exports.Author = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeo
 }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "photos", [_dec4], {
    enumerable: true,
    initializer: function initializer() {
-      return [];
+      return Author;
    }
 })), _class2)) || _class);

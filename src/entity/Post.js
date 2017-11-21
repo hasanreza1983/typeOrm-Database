@@ -14,10 +14,13 @@ export class Photo  {
     text = "";
      
    //stored the photo in metadata
-    @OneToOne(type => PhotoMetaData, PhotoMetaData => PhotoMetaData.photo)
-    metadata = PhotoMetaData;   
+   @OneToOne(type => PhotoMetaData, PhotoMetaData => PhotoMetaData.photo)
+   metadata = PhotoMetaData;
 	
-	@ManyToOne(type => Author, author => author.photos)
-	author = Author;
+    /* @ManyToOne(type => Author, author => author.photos)
+	@JoinColumn()
+	author = Author; */
+	
+	
 
 }

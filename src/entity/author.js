@@ -10,8 +10,8 @@ export class Author {
 	@Column("text")
     name = "";
 	
-   @OneToMany(type => Photo, photo => photo.author) 
-   photos = [];
+    @OneToMany(type => Photo, photo => photo.author) 
+    photos = Author;
 	 
 }
 

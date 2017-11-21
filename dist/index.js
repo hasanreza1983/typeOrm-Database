@@ -1,7 +1,5 @@
 "use strict";
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 require("reflect-metadata");
 
 var _typeorm = require("typeorm");
@@ -29,88 +27,52 @@ require("babel-polyfill");
   logging: false
 }).then(function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(connection) {
-    var photo, metadata, photoRepository, savedPhotos, secondPhoto, TitlePhoto, _ref2, _ref3, allPhotos, photosCount, photoToUpdate, savedPhotos2, photoMetaRespository, photoMetaSaved;
-
+    var photo, metadata, photoMetaData2;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            photo = new _Post.Photo();
 
+            /**** let photo = new Photo();
             photo.title = "Bear3";
             photo.text = "I am near polar bears";
-
-            /**** Created a photo MetaData ****/
-            metadata = new _photoMetaData.PhotoMetaData();
-
+             
+             Created a photo MetaData ****/
+            /* let metadata = new PhotoMetaData(); 
             metadata.height = "640";
             metadata.width = "1000";
             metadata.Orientation = "Portrait";
             metadata.compressed = true;
             metadata.comment = "Easy as pie";
             metadata.photo = photo; // relaton created
+              using async/await to save the Entity 
+             await connection.manager.save(photo);
+             //console.log("Photo has been saved");
+             
+             /* using Entity Manager to find Entities 
+             let savedPhotos = await connection.manager.find(Photo);
+             console.log("All Saved Photos are from the db:", savedPhotos); */
 
-            /* using async/await to save the Entity 
-            await connection.manager.save(photo);
-            //console.log("Photo has been saved");
-            
-            /* using Entity Manager to find Entities 
-            let savedPhotos = await connection.manager.find(Photo);
-            console.log("All Saved Photos are from the db:", savedPhotos); */
-
-            /***** using Repositories ****/
-            photoRepository = connection.getRepository(_Post.Photo);
-            _context.next = 13;
-            return photoRepository.save(photo);
-
-          case 13:
-            _context.next = 15;
-            return photoRepository.find();
-
-          case 15:
-            savedPhotos = _context.sent;
-            _context.next = 18;
-            return photoRepository.findOneById(2);
-
-          case 18:
-            secondPhoto = _context.sent;
-            _context.next = 21;
-            return photoRepository.find({ title: "Bear3" });
-
-          case 21:
-            TitlePhoto = _context.sent;
-            _context.next = 24;
-            return photoRepository.findAndCount();
-
-          case 24:
-            _ref2 = _context.sent;
-            _ref3 = _slicedToArray(_ref2, 2);
-            allPhotos = _ref3[0];
-            photosCount = _ref3[1];
-
+            /***** using Repositoriess
+            let photoRepository = connection.getRepository(Photo);
+            await photoRepository.save(photo);
+            let savedPhotos = await photoRepository.find();
+            let secondPhoto = await photoRepository.findOneById(2);
+            let TitlePhoto = await photoRepository.find({title: "Bear3"});
+            let [allPhotos , photosCount] = await photoRepository.findAndCount();
             //console.log("All of the Saved photos are:", savedPhotos);
-            //console.log("second one photo is:",secondPhoto);
-            //console.log("Title is:",TitlePhoto);
-            console.log("All photos:", allPhotos);
-            //console.log("PhotosCount:",photosCount);
-            //let photos = await photoRepository.find({relations: ["metadata"]});
-            //console.log("Relation Made",photos);
-
-
+             //console.log("second one photo is:",secondPhoto);
+             //console.log("Title is:",TitlePhoto);
+             console.log("All photos:",allPhotos);
+             //console.log("PhotosCount:",photosCount);
+             //let photos = await photoRepository.find({relations: ["metadata"]});
+             //console.log("Relation Made",photos);
+            
+            
             /************ updating Database **************/
-            _context.next = 31;
-            return photoRepository.findOneById(5);
-
-          case 31:
-            photoToUpdate = _context.sent;
-
-            photoToUpdate.title = "this is updated 5 title";
-            _context.next = 35;
-            return photoRepository.save(photoToUpdate);
-
-          case 35:
-            savedPhotos2 = _context.sent;
-
+            //let photoToUpdate = await photoRepository.findOneById(5);
+            //photoToUpdate.title = "this is updated 5 title";
+            //let savedPhotos2 = await photoRepository.save(photoToUpdate);
             //console.log("updated content is:",savedPhotos2);
 
             /****** Removing from the Database 
@@ -118,18 +80,52 @@ require("babel-polyfill");
             await photoRepository.remove(photoToRemove); ******/
 
             /****** get PhotoMetaData Repository *****/
-            photoMetaRespository = connection.getRepository(_photoMetaData.PhotoMetaData);
-            _context.next = 39;
-            return photoMetaRespository.save(metadata);
+            // let photoMetaRespository = connection.getRepository(PhotoMetaData);
+            // await photoMetaRespository.save(metadata);
+            //let photoMetaSaved = await photoMetaRespository.find();
+            //console.log("Relation b/w two created" , photoMetaSaved);
 
-          case 39:
-            _context.next = 41;
-            return photoMetaRespository.find();
+            /* let photosQuery = await connection.getRepository(Photo).createQueryBuilder("photo")
+            .innerJoinAndSelect("photo.metadata","metadata").getMany(); 
+            console.log('here is the Query:',photosQuery);  */
 
-          case 41:
-            photoMetaSaved = _context.sent;
+            // create a photo
+            photo = new _Post.Photo();
 
-          case 42:
+            photo.title = "Me and Bears";
+            photo.text = "I am near polar bears";
+
+            // create a photo metadata
+            metadata = new _photoMetaData.PhotoMetaData();
+
+            metadata.height = 640;
+            metadata.width = 480;
+            metadata.compressed = true;
+            metadata.comment = "cybershoot";
+            metadata.orientation = "portait";
+            metadata.photo = photo;
+
+            // get entity repositories
+            /* let photoRepository = connection.getRepository(Photo);
+            let metadataRepository = connection.getRepository(PhotoMetaData); 
+            await photoRepository.save(photo);
+            await metadataRepository.save(metadata);
+            
+             
+              let photos = await photoRepository.find({ relations: ["metadata"] });  
+            let photoMetaData2 = await metadataRepository.find({ relations: ["photo"] });  
+            //console.log(photos);
+            console.log("This is MetaData",photoMetaData2); */
+
+            _context.next = 12;
+            return connection.getRepository(_photoMetaData.PhotoMetaData).createQueryBuilder("photometa").leftJoinAndSelect("photometa.photo", "photo").getMany();
+
+          case 12:
+            photoMetaData2 = _context.sent;
+
+            console.log("This is MetaData", photoMetaData2);
+
+          case 14:
           case "end":
             return _context.stop();
         }
@@ -140,13 +136,6 @@ require("babel-polyfill");
   return function (_x) {
     return _ref.apply(this, arguments);
   };
-}()
-//console.log("Relation b/w two created" , photoMetaSaved);
-
-/* let photosQuery = await connection.getRepository(Photo).createQueryBuilder("photo")
-.innerJoinAndSelect("photo.metadata","metadata").getMany(); 
-console.log('here is the Query:',photosQuery);  */
-
-).catch(function (error) {
+}()).catch(function (error) {
   return console.log(error);
 });

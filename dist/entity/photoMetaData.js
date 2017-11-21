@@ -76,10 +76,7 @@ var PhotoMetaData = exports.PhotoMetaData = (_dec = (0, _typeorm.Entity)(), _dec
 			_initDefineProp(this, "comment", _descriptor6, this);
 
 			_initDefineProp(this, "photo", _descriptor7, this);
-}
-
-/// stored the metaData in photo Class
-, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "id", [_dec2], {
+}, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "id", [_dec2], {
 			enumerable: true,
 			initializer: function initializer() {
 						return undefined;
